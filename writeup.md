@@ -1,6 +1,3 @@
-##Writeup Template
-###You can use this file as a template for your writeup if you want to submit it as a markdown file, but feel free to use some other method and submit a pdf if you prefer.
-
 ---
 
 **Vehicle Detection Project**
@@ -15,7 +12,7 @@ The goals / steps of this project are the following:
 * Estimate a bounding box for vehicles detected.
 
 [//]: # (Image References)
-[image1]: ./output_images/car.jp
+[image1]: ./output_images/car.jpg
 [image34]: ./output_images/notcar.jpg
 [image2]: ./output_images/HOG_example_0.jpg
 [image3]: ./output_images/HOG_example_1.jpg
@@ -47,15 +44,15 @@ The goals / steps of this project are the following:
 ###Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
 
 ---
-###Writeup / README
+### Writeup / README
 
-####1. Provide a Writeup / README that includes all the rubric points and how you addressed each one.  You can submit your writeup as markdown or pdf.  [Here](https://github.com/udacity/CarND-Vehicle-Detection/blob/master/writeup_template.md) is a template writeup for this project you can use as a guide and a starting point.  
+#### 1. Provide a Writeup / README that includes all the rubric points and how you addressed each one.  You can submit your writeup as markdown or pdf.  [Here](https://github.com/udacity/CarND-Vehicle-Detection/blob/master/writeup_template.md) is a template writeup for this project you can use as a guide and a starting point.  
 
 You're reading it!
 
-###Histogram of Oriented Gradients (HOG)
+### Histogram of Oriented Gradients (HOG)
 
-####1. Explain how (and identify where in your code) you extracted HOG features from the training images.
+#### 1. Explain how (and identify where in your code) you extracted HOG features from the training images.
 
 The code for this step is contained in the first code cell of the IPython notebook `P2.ipynb`, functions `get_hog_features` and `extract_features`
 that builds feature vector for linear SVM classifier.  
@@ -80,27 +77,27 @@ planes:
 
 ![alt text][image4]
 
-####2. Explain how you settled on your final choice of HOG parameters.
+#### 2. Explain how you settled on your final choice of HOG parameters.
 
 I tried various combinations of parameters and settled on colorspace 'YUV', number of orientation buckets = 18 and number of spatial histogram bins
 32 as ones reliably giving a high performance in a sense of having low number of false positives and reliable car shape detection througout the video.
 I also got some idea for increasing number orientation bins from presentation slides and a talk linked to a project. 
 
-####3. Describe how (and identify where in your code) you trained a classifier using your selected HOG features (and color features if you used them).
+#### 3. Describe how (and identify where in your code) you trained a classifier using your selected HOG features (and color features if you used them).
 
 I trained a linear SVM using standard scaler that normalized feature vectors by subtracting a mean and deviding by vetor 
 variance. This is a standard preprocessing technique to ensure good performance of a classifer.
 
 
-###Sliding Window Search
+### Sliding Window Search
 
-####1. Describe how (and identify where in your code) you implemented a sliding window search.  How did you decide what scales to search and how much to overlap windows?
+#### 1. Describe how (and identify where in your code) you implemented a sliding window search.  How did you decide what scales to search and how much to overlap windows?
 
 I decided to search random window positions within the range of y position [300, 600] as it roughly represents lower bottom of a frame where all the action with cars  should be happenning. Top part of a screen is not interesting and also slows down the detection phase. Sliding window sizes was set to (64,64), (96, 128), (96, 96) and (128, 128) with 50% overlap in x and y direction. You can see them all on this frame: 
 
 ![alt text][image5]
 
-####2. Show some examples of test images to demonstrate how your pipeline is working.  What did you do to optimize the performance of your classifier?
+#### 2. Show some examples of test images to demonstrate how your pipeline is working.  What did you do to optimize the performance of your classifier?
 
 Ultimately I searched on two scales using YUV 3-channel HOG features plus spatially binned color and histograms of color in the feature vector, which provided a nice result.  Here are some example images:
 
@@ -118,7 +115,7 @@ Ultimately I searched on two scales using YUV 3-channel HOG features plus spatia
 Here's a [link to my video result](./test_videos_output/project_video.mp4)
 
 
-####2. Describe how (and identify where in your code) you implemented some kind of filter for false positives and some method for combining overlapping bounding boxes.
+#### 2. Describe how (and identify where in your code) you implemented some kind of filter for false positives and some method for combining overlapping bounding boxes.
 
 I recorded the positions of positive detections in each frame of the video and kept lst 10 frames of such detections.  From the positive detections I created a heatmap and then thresholded that map to identify vehicle positions.  I then used `scipy.ndimage.measurements.label()` to identify individual blobs in the heatmap.  I then assumed each blob corresponded to a vehicle.  I constructed bounding boxes to cover the area of each blob detected. To further reduce the noise from false positives I intersected every bounding box with a region of interest representing part of the road in front of our car. A non empty intersection results identifies a true positive with a higher probability.  
 
@@ -164,9 +161,7 @@ Here's an example result showing the heatmap from a series of frames of video, t
 
 ---
 
-###Discussion
-
-####1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
+### Discussion
 
 There are several weak points in my pipeline. It seems like dataset I used for training linear SVM classifier is slightly biased against white cars so having more of them in a training set would likely help to improve reliability of white vechicle detectin. Unfortunately I could not find a reliable readily available data set with white cars. The one from udacity doesn't have a color attribute in a descriptor and when I tried to use it as a whole in fact worsen the preformance of the final classifier. 
 Another technique I tried to use and fail was using CNN deep NN classifier and then using weighted combinatinon of two classifers to get the final label, that also turned rather to be unsuccessful for reasons I am still investigating. I got too many false positives from NN in this case. I believe I would need much more data point for training to make CNN shine in this particular case.
