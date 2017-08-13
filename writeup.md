@@ -61,10 +61,14 @@ that builds feature vector for linear SVM classifier.
 
 I started by reading in all the `vehicle` and `non-vehicle` images.  Here is an example of one of each of the `vehicle` and `non-vehicle` classes:
 
-"Vehicle class"
-![Vehicle class][image1]
+Vehicle class
+--
 
-"Not vehicle class"
+![alt_text][image1]
+
+Not vehicle class
+--
+
 ![alt text][image34]
 
 
@@ -73,9 +77,20 @@ I then explored different color spaces and different `skimage.hog()` parameters 
 Here is an example using the `YUV` color space and HOG parameters of `orientations=18`, `pixels_per_cell=(8, 8)` and `cells_per_block=(2, 2)` for three YUV color
 planes:
 
+Y-plane
+--
+
 ![alt text][image2]
 
+
+U-plane
+--
+
 ![alt text][image3]
+
+
+V-plane
+--
 
 ![alt text][image4]
 
@@ -96,6 +111,10 @@ variance. This is a standard preprocessing technique to ensure good performance 
 #### 1. Describe how (and identify where in your code) you implemented a sliding window search.  How did you decide what scales to search and how much to overlap windows?
 
 I decided to search random window positions within the range of y position [300, 600] as it roughly represents lower bottom of a frame where all the action with cars  should be happenning. Top part of a screen is not interesting and also slows down the detection phase. Sliding window sizes was set to (64,64), (96, 128), (96, 96) and (128, 128) with 50% overlap in x and y direction. You can see them all on this frame: 
+
+
+Sliding windows
+--
 
 ![alt text][image5]
 
@@ -125,35 +144,53 @@ Here's an example result showing the heatmap from a series of frames of video, t
 
 ### Here are six frames and their corresponding heatmaps:
 
-"Frame0"
+Frame0
+--
+
 ![alt text][image6]
 ![alt text][image7]
 
-"Frame1"
+Frame1
+--
+
 ![alt text][image8]
 ![alt text][image9]
 
-"Frame2"
+Frame2
+--
+
 ![alt text][image10]
 ![alt text][image11]
 
-"Frame3"
+Frame3
+--
+
 ![alt text][image12]
 ![alt text][image13]
 
-"Frame4"
+Frame4
+--
+
 ![alt text][image14]
 ![alt text][image15]
 
-"Frame5"
+Frame5
+--
+
 ![alt text][image16]
 ![alt text][image17]
 
-"Frame6"
+Frame6
+--
+
 ![alt text][image18]
 ![alt text][image19]
 
 ### Here is the output of `scipy.ndimage.measurements.label()` on the integrated heatmap from all six frames:
+
+Labels
+--
+
 ![alt text][image20]
 
 ### Here the resulting bounding boxes are drawn onto the last frame in the series:
