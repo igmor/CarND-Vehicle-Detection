@@ -22,7 +22,7 @@ The goals / steps of this project are the following:
 [image5]: ./output_images/sliding_windows.jpg
 [image6]: ./output_images/final_frame0.jpg
 [image7]: ./output_images/heatmap0.jpg
-[image8]: ./output_images/final_fram1.jpg
+[image8]: ./output_images/final_frame1.jpg
 [image9]: ./output_images/heatmap1.jpg
 [image10]: ./output_images/final_frame2.jpg
 [image11]: ./output_images/heatmap2.jpg
@@ -62,7 +62,7 @@ that builds feature vector for linear SVM classifier.
 I started by reading in all the `vehicle` and `non-vehicle` images.  Here is an example of one of each of the `vehicle` and `non-vehicle` classes:
 
 "Vehicle class"
-![alt text][image1]
+![Vehicle class][image1]
 
 "Not vehicle class"
 ![alt text][image34]
