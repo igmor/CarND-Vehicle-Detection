@@ -201,6 +201,6 @@ Labels
 
 ### Discussion
 
-There are several weak points in my pipeline. It seems like dataset I used for training linear SVM classifier is slightly biased against white cars so having more of them in a training set would likely help to improve reliability of white vechicle detectin. Unfortunately I could not find a reliable readily available data set with white cars. The one from udacity doesn't have a color attribute in a descriptor and when I tried to use it as a whole in fact worsen the preformance of the final classifier. 
-Another technique I tried to use and fail was using CNN deep NN classifier and then using weighted combinatinon of two classifers to get the final label, that also turned rather to be unsuccessful for reasons I am still investigating. I got too many false positives from NN in this case. I believe I would need much more data point for training to make CNN shine in this particular case.
+There are several weak points in my pipeline. It seems like dataset I used for training linear SVM classifier is slightly biased against white cars so having more of them in a training set would likely help to improve reliability of white vechicle detection. 
+Another technique I tried to use was CNN deep NN classifier and then using weighted combinatinon of two classifers to get the final classifier. The problem with this approach was too many false positives from NN in this case. It seems like CNN network would  need much more data point for training to make CNN shine in this particular case.
 
